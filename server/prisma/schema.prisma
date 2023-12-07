@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String   @db.VarChar(50)
+  login      String   @unique @db.VarChar(10)
+  password   String   @db.VarChar(8)
+  avatarImg  String?
+  isActive   Boolean  @default(true)
+  categoryId String
+  createdAt  DateTime @default(now())
+  updateAt   DateTime
+
+  category Category @relation(fields: [categoryId], references: [id])
+  ticket   Ticket[]
+
+  @@map("users")
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  description String   @db.VarChar(20)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  users       User[]
+
+  @@map("categorys")
+}
+
+model Ticket {
+  id           String   @id @default(uuid())
+  ticketNumber BigInt   @default(autoincrement())
+  userId       String
+  title        String
+  description  String   @db.Text
+  priority     String   @db.VarChar(1)
+  status       String   @default("A") @db.VarChar(1)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+  finishedAt   DateTime
+
+  user                User                  @relation(fields: [userId], references: [id])
+  interactionsTickets InteractionsTickets[]
+
+  @@map("tickets")
+}
+
+model Interaction {
+  id                  String                @id @default(uuid())
+  title               String
+  description         String
+  createdAt           DateTime              @default(now())
+  interactionsTickets InteractionsTickets[]
+
+  @@map("interactions")
+}
+
+model InteractionsTickets {
+  id            String   @id @default(uuid())
+  ticketId      String
+  interactionId String
+  createdAT     DateTime @default(now())
+
+  ticket      Ticket      @relation(fields: [ticketId], references: [id])
+  interaction Interaction @relation(fields: [interactionId], references: [id])
+
+  @@map("interactionsTickets")
+}
