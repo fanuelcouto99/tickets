@@ -26,7 +26,7 @@ const config: Config = {
       },
       gridTemplateColumns: {
         '2': '256px 1fr' 
-      }
+      },
     },
   },
   plugins: [],

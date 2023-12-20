@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import * as Separator from '@radix-ui/react-separator';
 import { BarChart3, ChevronDown, Home, Plus, PlusCircle, ScrollText, Search, Send, Ticket, UserRoundPlus } from 'lucide-react';
+import Link from 'next/link';
 
 interface SiderProps {
     isOpenMenu: boolean;
@@ -16,15 +17,15 @@ export function Siderbar({ isOpenMenu }: SiderProps) {
         switch (menu) {
             case 'NEW':
                 setIsSubmenuOpenNew(!isSubmenuOpenNew);
-            break;
+                break;
 
             case 'TICKETS':
                 setIsSubmenuOpenTickets(!isSubmenuOpenTickets);
-            break;
+                break;
 
             case 'CHART':
                 setIsSubmenuOpenChart(!isSubmenuOpenChart);
-            break;
+                break;
         }
     };
 
@@ -32,10 +33,12 @@ export function Siderbar({ isOpenMenu }: SiderProps) {
         <div className="px-3 border-t border-t-gray-100 transition-all">
             {isOpenMenu ? (
                 <>
-                    <div className="flex items-center mt-4 gap-1 py-3 px-1 hover:bg-gray-100 hover:text-gray-900 hover:rounded-md hover:cursor-pointer">
-                        <Home size={20} />
-                        <span>Home</span>
-                    </div>
+                    <Link href={'/'}>
+                        <div className="flex items-center mt-4 gap-1 py-3 px-1 hover:bg-gray-100 hover:text-gray-900 hover:rounded-md hover:cursor-pointer">
+                            <Home size={20} />
+                            <span>Home</span>
+                        </div>
+                    </Link>
 
                     <Separator.Root className='bg-gray-100 w-full h-px mt-3 rounded-sm' />
 
@@ -54,10 +57,12 @@ export function Siderbar({ isOpenMenu }: SiderProps) {
                                     <UserRoundPlus size={18} className='stroke-gray-900' />
                                     <span className='text-md text-gray-900'>Usuarios</span>
                                 </div>
-                                <div className='flex items-center gap-1 py-3 px-1 hover:bg-gray-400/50 hover:text-gray-100 hover:rounded-md hover:cursor-pointer'>
-                                    <PlusCircle size={18} className='stroke-gray-900' />
-                                    <span className='text-md text-gray-900'>Categorias</span>
-                                </div>
+                                <Link href={'categories/new'}>
+                                    <div className='flex items-center gap-1 py-3 px-1 hover:bg-gray-400/50 hover:text-gray-100 hover:rounded-md hover:cursor-pointer'>
+                                        <PlusCircle size={18} className='stroke-gray-900' />
+                                        <span className='text-md text-gray-900'>Categorias</span>
+                                    </div>
+                                </Link>
                             </div>
                         ) : null}
                     </div>
