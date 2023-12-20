@@ -46,7 +46,7 @@ export function Header({ onHandleOpenSidebar }: Props) {
                                 <Avatar.Image
                                     src='https://github.com/fanuelcouto99.png'
                                     alt=''
-                                    className='w-10 h-10 rounded-full'
+                                    className='w-10 h-10 rounded-md'
                                 />
                                 <Avatar.Fallback>
                                     <UserCircle2 size={28} />
